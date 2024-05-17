@@ -1,6 +1,6 @@
 const express = require('express');
 let books = require("./booksdb.js");
-let isValid = require("./auth_users.js").isValid;
+const { default: axios } = require('axios');
 let users = require("./auth_users.js").users;
 const public_users = express.Router();
 
@@ -75,4 +75,55 @@ public_users.get('/review/:isbn',function (req, res) {
 
 });
 
+//Using Axios for api calls
+const  getAllBooks = async () =>{
+    const books = await axios.get('http://localhost:5000/')
+    .then((res)=>{
+    const data = res;
+    console.log(data)
+    })
+    .catch((err)=>{console.log(err)})
+
+    return books;
+}
+
+  const  getBook = async (isbn) =>{
+  const book = await axios.get(`http://localhost:5000/isbn/${isbn}`)
+  .then(async (res)=>{
+  const data = await res.data;
+  console.log(data)
+  })
+  .catch((err)=>{console.log(err)})
+  
+  return book
+}
+
+const  getAuthorBooks = async (author) =>{
+  const books = await axios.get(`http://localhost:5000/author/${author}`)
+  .then((res)=>{
+  const data = res;
+  console.log(data)
+  })
+  .catch((err)=>{console.log(err)})
+
+  return books
+}
+
+const getBookbyTitle =async (title) =>{
+  const books = await axios.get(`http://localhost:5000/title/${title}`)
+  .then((res)=>{
+  const data = res.data;
+  console.log(data)
+  })
+  .catch((err)=>{console.log(err)})
+
+  return books;
+}
+
+module.exports.getBook = getBook;
+module.exports.getAllBooks = getAllBooks;
+module.exports.getAuthorBooks = getAuthorBooks;
+module.exports.getBookbyTitle = getBookbyTitle;
+
 module.exports.general = public_users;
+
