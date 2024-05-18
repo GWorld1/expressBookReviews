@@ -79,7 +79,7 @@ public_users.get('/review/:isbn',function (req, res) {
 const  getAllBooks = async () =>{
     const books = await axios.get('http://localhost:5000/')
     .then((res)=>{
-    const data = res;
+    const data = res.data;
     console.log(data)
     })
     .catch((err)=>{console.log(err)})
@@ -101,7 +101,7 @@ const  getAllBooks = async () =>{
 const  getAuthorBooks = async (author) =>{
   const books = await axios.get(`http://localhost:5000/author/${author}`)
   .then((res)=>{
-  const data = res;
+  const data = res.data;
   console.log(data)
   })
   .catch((err)=>{console.log(err)})
